@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>shopping list</title>
+		<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script type="text/javascript" src="./js/vue.js"></script>
+	</head>
+  <body>
+		<div class="container js-instance">
+			<h1>Shopping list</h1>
+			<h2>{{ warning }}</h2>
+			<div class="row">
+				<form class="col s12">
+					<div class="input-field col s12 m4">
+						<input placeholder="Product" type="text" v-model="itemName" class="form__field" />
+						<a class="btn-floating btn-small waves-effect waves-light indigo"><i class="material-icons" v-on:click="add">+</i></a>
+					</div>
+					<div class="input-field col s12 m8">
+						<input placeholder="Additional notes" type="text" v-model="itemNotes" class="form__field_notes" />
+					</div>
+				</form>
+			</div>
+			<ul class="collection" v-if="items.length">
+				<li class="collection-item"	v-for="(item, index) in items">
+					<div class="row">
+						<div class="col s12 m4">
+							{{ item.name }}
+						</div>
+						<div class="col s12 m7">
+							{{ item.notes }}
+						</div>
+						<div class="col s1 right">
+							<a class="waves-effect waves-light btn-small indigo" v-on:click="removeItem(index)">-</a>
+						</div>
+					</div>
+					</li>
+				</ul>
+
+				<h2 v-if="!items.length">Add items to the shopping list</h2>
+
+		</div>
+		<script type="text/javascript" src="./js/index.js"></script>
+  </body>
+</html>
