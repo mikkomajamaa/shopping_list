@@ -1,15 +1,16 @@
+const baseUrl = '/api/notes'
+
 new Vue({
   el: '.js-instance',
   name: 'vue-instance',
 
   data() {
     return {
+      id: null,
       itemName: null,
       itemNotes: null,
       warning: '',
-      items: [
-        {name:'puuhöylä', notes:'ei ollu puuhöylä'}
-      ],
+      items: [],
     };
   },
 
@@ -22,52 +23,56 @@ new Vue({
         localStorage.removeItem('items');
       }
     }
+
+    axios.get(baseUrl)
+       .then(res => {
+         this.items = res.data;
+       })
+       .catch(function (error) {
+         console.log(error)
+       })
   },
 
   methods: {
     removeItem(index) {
+      var id = this.items[index];
+      if (id) {
+        id = this.items[index]['id']
+        axios.delete(`${baseUrl}/${id}`)
+      } else {
+        console.log("can't delete yet")
+        return;
+      }
       this.items.splice(index, 1);
       this.saveItems();
     },
 
+
     add() {
-      if (this.itemName === '') {
-        this.warning = 'Only strings containing 1-30 alphanumerical characters or dots or commas allowed';
+      if (!this.itemName) {
+        this.warning = 'No empty product names allowed.';
         return;
       }
 
-      if (this.itemName.match(/^[a-z0-9,.]{1,30}$/i)) {
-        console.log(this.items);
-        this.items.push(
-          {name: this.itemName, notes: this.itemNotes}
-        );
-        this.itemName = '';
-        this.itemNotes = '';
-        this.warning = '';
-        this.saveItems();
-      } else {
-        this.warning = 'Only strings containing 1-30 alphanumerical characters or dots or commas allowed';
-      }
+        const noteObject = {
+          item: this.itemName,
+          additionalNotes: this.itemNotes
+        }
 
-      const noteObject = {
-        item: this.itemName,
-        additionalNotes: this.itemNotes,
-        show: true
-      }
-
-    //  noteService
-      //  .create(noteObject)
-        //.then(newNote => {
-        //  console.log('here')
-        //  this.setState({
-        //    items: this.items.concat(newNote),
-        //    itemName: '',
-        //    itemNotes: '',
-        //  })
-    // })
-
-
-
+        axios({
+          method: "post",
+          url: baseUrl,
+          data: noteObject
+        }).then(response =>{
+          this.id = response.data.id
+            this.items.push(
+              {id: this.id, item: this.itemName, additionalNotes: this.itemNotes}
+            )
+          this.itemName = '';
+          this.itemNotes = '';
+          this.id = '';
+          this.warning = '';
+        });
     },
 
     saveItems() {

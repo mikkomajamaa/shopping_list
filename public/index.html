@@ -8,6 +8,7 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 		<script type="text/javascript" src="./js/vue.js"></script>
 	</head>
   <body>
@@ -29,10 +30,10 @@
 				<li class="collection-item"	v-for="(item, index) in items">
 					<div class="row">
 						<div class="col s12 m4">
-							{{ item.name }}
+							{{ item.item }}
 						</div>
 						<div class="col s12 m7">
-							{{ item.notes }}
+							{{ item.additionalNotes }}
 						</div>
 						<div class="col s1 right">
 							<a class="waves-effect waves-light btn-small indigo" v-on:click="removeItem(index)">-</a>
