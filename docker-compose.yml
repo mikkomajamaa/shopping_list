@@ -1,7 +1,7 @@
 version: "2.1"
 services:
   app:
-    container_name: app2
+    container_name: app9
     restart: always
     build: .
     ports:
@@ -11,7 +11,7 @@ services:
     links:
       - mongo
   mongo:
-    container_name: mongo2
+    container_name: mongo9
     image: mongo
     volumes:
       - ./data:/data/db

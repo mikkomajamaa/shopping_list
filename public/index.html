@@ -15,7 +15,70 @@
 		<div class="container js-instance">
 			<h1>Shopping list</h1>
 			<h2>{{ warning }}</h2>
-			<div class="row">
+
+
+
+			<div class="container" style="width: 100%;height: 100%;max-width: 100%;margin: auto">
+				<form class="col s12" v-if="loginStatus == 1">
+
+					<div class="row">
+
+					<div class="input-field col s12 m6 center">
+						<input type="text" v-model="username" id="username"/>
+						<label for='password'>Enter your username</label>
+					</div>
+
+
+					</div>
+					<div class="row">
+					<div class="input-field col s12 m6 row">
+						<input type="password" v-model="password" id="password"/>
+						<label for='password'>Enter your password</label>
+					</div>
+					</div>
+
+					<a class="col s4 btn btn-large waves-effect indigo"><i class="material-icons" v-on:click="login">Sign in</i></a>
+					<p v-on:click="changeLoginStatus" id="myText" style="color:#0000FF; cursor: pointer">or sign up</p>
+					<p v-if="loginError">{{loginError}}</p>
+
+				</form>
+
+
+				<form class="col s12" v-if="loginStatus == 2">
+					<div class="row">
+					<div class="input-field col s12 m6">
+						<input type="text" v-model="newUsername" class="form__field_newUsername" id="username"/>
+						<label for='password'>Enter new username</label>
+					</div>
+					</div>
+
+					<div class="row">
+					<div class="input-field col s12 m3">
+						<input type="password" v-model="newPassword" class="form__field_newPw" id="password"/>
+						<label for='password'>Enter new password</label>
+					</div>
+
+					<div class="input-field col s12 m3">
+						<input type="password" v-model="newPassword2" class="form__field_newPw2" id="password"/>
+						<label for='password'>Repeat password</label>
+					</div>
+					</div>
+
+					<a class="col s4 btn btn-large waves-effect indigo"><i class="material-icons" v-on:click="createAccount">Sign up</i></a>
+					<p v-on:click="changeLoginStatus" id="myText" style="color:#0000FF; cursor: pointer">or sign in</p>
+					<p v-if="pwsDontMatch">Passwords don't match.</p>
+					<p v-if="signUpText">{{signUpText}}</p>
+
+				</form>
+
+				<div class="col s12" v-if="loginStatus == 3">
+					<p>Logged in as {{loggedInUser}}</p>
+						<a class="col s4 btn btn-large waves-effect indigo"><i class="material-icons" v-on:click="changeLoginStatus">Logout</i></a>
+					</div>
+			</div>
+
+
+			<div v-if="loggedInUser"class="row">
 				<form class="col s12">
 					<div class="input-field col s12 m4">
 						<input placeholder="Product" type="text" v-model="itemName" class="form__field" />
@@ -26,6 +89,7 @@
 					</div>
 				</form>
 			</div>
+			<div v-if="loggedInUser"class="row">
 			<ul class="collection" v-if="items.length">
 				<li class="collection-item"	v-for="(item, index) in items">
 					<div class="row">
@@ -41,8 +105,9 @@
 					</div>
 					</li>
 				</ul>
-
-				<h2 v-if="!items.length">Add items to the shopping list</h2>
+				<h2 v-if="!items.length">Add items to the shopping list.</h2>
+				</div>
+				<h2 v-if="!loggedInUser">Please sign in to see your notes.</h2>
 
 		</div>
 		<script type="text/javascript" src="./js/index.js"></script>
