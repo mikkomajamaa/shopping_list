@@ -58,7 +58,6 @@ new Vue({
       var id = this.items[index];
       if ((id) && (this.token)){
         id = this.items[index]['id']
-        //axios.delete(`${baseUrl}/${id}`)
         const AuthStr = 'Token '.concat(this.token);
 
         axios({
